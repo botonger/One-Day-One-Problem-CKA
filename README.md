@@ -1,1 +1,100 @@
-# One-Day-One-Problem-CKA
+# One-Day-One-Problem-CKA 
+
+
+#### 🎃 0402
+
+```bash
+kubectl create serviceaccount pvviewer
+
+kubectl create clusterrolebinding pvviewer-role-binding \
+  --clusterrole=pvviewer-role \
+  --serviceaccount=pvviewer
+  
+kubectl run pvviewer --image=redis --dry-run=client -o yaml
+```
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pvviewer
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pvviewer-role
+rules:
+  - verbs:
+      - list
+    resources:
+      - persistentvolumes
+    apiGroups:
+      - v1
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pvviewer-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: pvviewer
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: pvviewer-role
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvviewer
+  namespace: default
+spec:
+  serviceAccountName: pvviewer
+  containers:
+    - name: redis
+```
+
+#### 🤖 0403
+
+```bash
+kubectl create deployment nginx-deploy --image nginx:1.16 --dry-run=client --replicas=1 -o yaml
+
+#https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-intro/
+kubectl set image deployment/nginx-deploy nginx=nginx:1.17 --record
+```
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-deploy
+  name: nginx-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-deploy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy
+    spec:
+      containers:
+        - image: nginx:1.16
+          name: nginx
+          resources: {}
+```
+
+#### 🤖 0404
+
+```bash
+#gcp-specific
+export CLUSTER_NAME=cluster
+
+echo $(gcloud container clusters describe $CLUSTER_NAME --format='value(privateClusterConfig.privateEndpoint)') \
+$(kubectl get node -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}') \
+> /root/CKA/node_ips
+```
