@@ -98,3 +98,22 @@ echo $(gcloud container clusters describe $CLUSTER_NAME --format='value(privateC
 $(kubectl get node -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}') \
 > /root/CKA/node_ips
 ```
+
+#### 😹 0406
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ingress-to-nptest
+spec:
+  podSelector:
+    matchLabels:
+      app: np-test-1
+  policyTypes:
+  - Ingress
+  ingress:
+    - ports:
+        - port: 80
+          protocol: TCP
+```
