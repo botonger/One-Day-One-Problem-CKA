@@ -117,3 +117,10 @@ spec:
         - port: 80
           protocol: TCP
 ```
+
+#### ✋ 0407
+
+```bash
+kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace} {.metadata.name}{"\n"}{end}'
+
+```
