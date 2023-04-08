@@ -124,3 +124,31 @@ spec:
 kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace} {.metadata.name}{"\n"}{end}'
 
 ```
+
+#### 👨‍🎨 0408
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.21.6
+      volumeMounts:
+        - mountPath: /var/log/nginx
+          name: logs
+    - name: streaming
+      image: busybox1.35.0
+      args:
+        - 'bin/sh'
+        - '-c'
+        - 'tail -n+1 -f /var/log/nginx/access.log'
+      volumeMounts:
+        - mountPath: /var/log/nginx
+          name: logs
+  volumes:
+    - name: logs
+      emptyDir: {}
+```
