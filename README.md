@@ -152,3 +152,10 @@ spec:
     - name: logs
       emptyDir: {}
 ```
+
+#### 👨‍ 0410
+
+```bash
+kubectl run nginx --image=nginx --env=var1=val1
+kubectl exec -it nginx -- env
+```
