@@ -159,3 +159,30 @@ spec:
 kubectl run nginx --image=nginx --env=var1=val1
 kubectl exec -it nginx -- env
 ```
+
+#### 🙋‍♀️ 0411
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: stress-1
+spec:
+  containers:
+    - image: polinux/stress:1.0.4
+      name: stress-1
+      args:
+        - "/bin/sh"
+        - "-c"
+        - "stress --vm 1 --vm-bytes $(shuf -i 20-200 -n 1)M --vm-hang 1"
+      resources:
+        limits:
+          memory: 250Mi
+        requests:
+          memory: 250Mi
+```
+
+```bash
+kubectl top pods
+echo "" > max.memory.txt
+```
