@@ -186,3 +186,36 @@ spec:
 kubectl top pods
 echo "" > max.memory.txt
 ```
+
+#### 🧵 0412
+
+```bash
+kubectl run my-pod --image=busybox -o yaml --dry-run=client -- /bin/sh -c 'echo hello; sleep 3600'
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: my-pod
+  name: my-pod
+spec:
+  containers:
+    - command:
+        - /bin/sh
+        - -c
+        - echo hello; sleep 3600
+      image: busybox
+      name: my-con1
+    - command:
+        - /bin/sh
+        - -c
+        - echo hello; sleep 3600
+      image: busybox
+      name: my-con2
+```
+
+```bash
+kubectl exec -it my-pod -c my-con2 -- ls
+```
