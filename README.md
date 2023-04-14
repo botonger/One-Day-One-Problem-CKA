@@ -219,3 +219,11 @@ spec:
 ```bash
 kubectl exec -it my-pod -c my-con2 -- ls
 ```
+
+#### 👒 0414
+
+```bash
+kubectl apply -R -f ./manifests/
+```
+
+- The kubectl apply -R command applies the configuration files found in the current directory, recursively, to the Kubernetes cluster. This means that all the configuration files, including those in subdirectories, will be applied to the cluster.
