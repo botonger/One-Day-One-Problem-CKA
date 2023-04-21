@@ -227,3 +227,10 @@ kubectl apply -R -f ./manifests/
 ```
 
 - The kubectl apply -R command applies the configuration files found in the current directory, recursively, to the Kubernetes cluster. This means that all the configuration files, including those in subdirectories, will be applied to the cluster.
+
+#### 🐰 0421
+
+```bash
+kubectl cordon ek8s-node-1
+kubectl drain ek8s-node-1 --ignore-daemonsets --delete-local-data --force
+```
