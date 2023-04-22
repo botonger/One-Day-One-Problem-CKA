@@ -240,3 +240,9 @@ kubectl drain ek8s-node-1 --ignore-daemonsets --delete-local-data --force
 ```bash
 kubectl logs pod/foobar | grep unable-to-access-website > /opt/KUTR00101/foobar
 ```
+
+#### 🧢 0423
+
+```bash
+kubectl top pod -l tier=backend -A --sort-by=cpu --no-headers | head -1 | awk '{print $2}' >> /opt/KUT00101/KUT00101.txt
+```
