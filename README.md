@@ -234,3 +234,9 @@ kubectl apply -R -f ./manifests/
 kubectl cordon ek8s-node-1
 kubectl drain ek8s-node-1 --ignore-daemonsets --delete-local-data --force
 ```
+
+#### 👒 0422
+
+```bash
+kubectl logs pod/foobar | grep unable-to-access-website > /opt/KUTR00101/foobar
+```
