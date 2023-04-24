@@ -246,3 +246,26 @@ kubectl logs pod/foobar | grep unable-to-access-website > /opt/KUTR00101/foobar
 ```bash
 kubectl top pod -l tier=backend -A --sort-by=cpu --no-headers | head -1 | awk '{print $2}' >> /opt/KUT00101/KUT00101.txt
 ```
+
+#### 👢 0424
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pong
+  namespace: ing-internal
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: hi
+                port:
+                  number: 5678
+            pathType: prefix
+            path: /hi
+```
